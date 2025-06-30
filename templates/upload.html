@@ -1,0 +1,22 @@
+ {% extends 'layout.html' %}
+{% block title %}Upload Jadwal{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Upload File Jadwal</h1>
+</div>
+<div class="card">
+    <div class="card-header"><h5 class="card-title">Petunjuk Upload</h5></div>
+    <div class="card-body">
+        <p class="card-text">Unggah file Excel (format <strong>.xlsx</strong>) di sini untuk memperbarui seluruh data jadwal. File yang lama akan otomatis digantikan dengan file yang baru.</p>
+        <div class="alert alert-info">
+            <h6 class="alert-heading">Format Kolom yang Diperlukan</h6>
+            <p>Pastikan file Excel Anda memiliki kolom-kolom berikut dengan nama yang persis sama:</p>
+            <code>ID, Dosen, Mata Kuliah, SKS, Kelas, Hari, Jam Mulai, Jam Selesai, Gedung, Lantai, Ruangan, Tipe Kelas</code>
+        </div>
+        <form method="post" enctype="multipart/form-data">
+            <div class="mb-3"><label for="file" class="form-label">Pilih file Excel:</label><input class="form-control" type="file" id="file" name="file" accept=".xlsx, .xls" required></div>
+            <button type="submit" class="btn btn-primary"><i class="fas fa-upload me-2"></i>Unggah Sekarang</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

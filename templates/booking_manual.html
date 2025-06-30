@@ -1,0 +1,45 @@
+ {% extends 'layout.html' %}
+{% block title %}Booking Manual{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Form Booking Jadwal Manual</h1>
+</div>
+<div class="card">
+    <div class="card-body">
+        <form method="POST" class="needs-validation" novalidate>
+            <div class="row g-3">
+                <div class="col-md-6"><label for="Dosen" class="form-label">Nama Dosen</label><input type="text" class="form-control" name="Dosen" required></div>
+                <div class="col-md-6"><label for="Mata Kuliah" class="form-label">Mata Kuliah</label><input type="text" class="form-control" name="Mata Kuliah" placeholder="Ketik 'MAINTENANCE' untuk jadwal perbaikan" required></div>
+                <div class="col-md-3"><label for="SKS" class="form-label">SKS</label><input type="number" class="form-control" name="SKS" value="0" required></div>
+                <div class="col-md-3"><label for="Kelas" class="form-label">Kelas</label><input type="text" class="form-control" name="Kelas" placeholder="Contoh: A, B, Sore" required></div>
+                <div class="col-md-6"><label for="Hari" class="form-label">Hari</label><select class="form-select" name="Hari" required><option selected disabled value="">Pilih Hari...</option><option>SENIN</option><option>SELASA</option><option>RABU</option><option>KAMIS</option><option>JUMAT</option><option>SABTU</option></select></div>
+                <div class="col-md-6"><label for="Jam Mulai" class="form-label">Jam Mulai</label><input type="time" class="form-control" name="Jam Mulai" required></div>
+                <div class="col-md-6"><label for="Jam Selesai" class="form-label">Jam Selesai</label><input type="time" class="form-control" name="Jam Selesai" required></div>
+                <div class="col-md-4"><label for="Gedung" class="form-label">Gedung</label><input type="text" class="form-control" name="Gedung" value="Gedung A" required></div>
+                <div class="col-md-4"><label for="Lantai" class="form-label">Lantai</label><input type="number" class="form-control" name="Lantai" value="1" required></div>
+                
+                <div class="col-md-4">
+                    <label for="Ruangan" class="form-label">Ruangan</label>
+                    <select class="form-select" name="Ruangan" required>
+                        <option selected disabled value="">Pilih Ruangan...</option>
+                        {% for ruangan in ruangan_list %}
+                        <option>{{ ruangan }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <div class="col-12">
+                    <label for="Tipe Kelas" class="form-label">Tipe Kelas</label>
+                    <select class="form-select" name="Tipe Kelas" required>
+                        <option selected disabled value="">Pilih Tipe...</option>
+                        <option>Online</option>
+                        <option>Offline</option>
+                    </select>
+                </div>
+            </div>
+            <hr class="my-4">
+            <button type="submit" class="btn btn-primary btn-lg">Simpan Booking</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

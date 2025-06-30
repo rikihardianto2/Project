@@ -1,0 +1,46 @@
+ {% extends 'layout.html' %}
+{% block title %}Lihat Jadwal Lengkap{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Data Lengkap Jadwal</h1>
+    <a href="{{ url_for('download_excel') }}" class="btn btn-success"><i class="fas fa-file-excel me-2"></i>Download Data</a>
+</div>
+<div class="card">
+    <div class="card-header"><input class="form-control" id="searchInput" type="text" placeholder="Cari data apa saja di dalam tabel..."></div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped table-hover table-bordered">
+                <thead class="table-dark">
+                    <tr>{% for col in columns %}<th>{{ col }}</th>{% endfor %}</tr>
+                </thead>
+                <tbody id="jadwalTable">
+                    {% if jadwal_data %}
+                        {% for row in jadwal_data %}
+                        <tr>{% for col in columns %}<td>{{ row[col] }}</td>{% endfor %}</tr>
+                        {% endfor %}
+                    {% else %}
+                    <tr>
+                        <td colspan="{{ columns|length }}" class="text-center p-5">
+                            <h5>Tidak ada data jadwal.</h5>
+                            <p class="mb-0">Silakan <a href="{{ url_for('upload_file') }}">unggah file Excel</a> atau <a href="{{ url_for('booking_manual') }}">buat booking manual</a> terlebih dahulu.</p>
+                        </td>
+                    </tr>
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+document.getElementById('searchInput').addEventListener('keyup', function() {
+    let filter = this.value.toUpperCase();
+    let table = document.getElementById('jadwalTable');
+    let trs = table.getElementsByTagName('tr');
+    for (let i = 0; i < trs.length; i++) {
+        trs[i].style.display = (trs[i].textContent || trs[i].innerText).toUpperCase().indexOf(filter) > -1 ? "" : "none";
+    }
+});
+</script>
+{% endblock %}

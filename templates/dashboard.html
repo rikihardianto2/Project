@@ -1,0 +1,20 @@
+ {% extends 'layout.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Dashboard</h1>
+    <span class="text-muted">Ringkasan Status Saat Ini</span>
+</div>
+<div class="row">
+    <div class="col-md-6 col-xl-3 mb-4"><div class="card text-bg-primary"><div class="card-body"><h3>{{ stats.total }}</h3><p>Total Ruangan</p></div></div></div>
+    <div class="col-md-6 col-xl-3 mb-4"><div class="card text-bg-success"><div class="card-body"><h3>{{ stats.tersedia }}</h3><p>Ruangan Tersedia</p></div></div></div>
+    <div class="col-md-6 col-xl-3 mb-4"><div class="card text-bg-danger"><div class="card-body"><h3>{{ stats.dipakai }}</h3><p>Ruangan Dipakai</p></div></div></div>
+    <div class="col-md-6 col-xl-3 mb-4"><div class="card text-bg-secondary"><div class="card-body"><h3>{{ stats.maintenance }}</h3><p>Dalam Perbaikan</p></div></div></div>
+</div>
+<div class="card">
+    <div class="card-header"><h5 class="card-title mb-0">Selamat Datang, {{ session.username | capitalize }}!</h5></div>
+    <div class="card-body">
+        <p>Gunakan menu navigasi di sebelah kiri untuk mengelola jadwal. Jika data masih kosong, silakan mulai dengan mengunggah file jadwal atau membuat booking manual.</p>
+    </div>
+</div>
+{% endblock %}

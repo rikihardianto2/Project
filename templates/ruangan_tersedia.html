@@ -1,0 +1,90 @@
+ {% extends 'layout.html' %}
+{% block title %}Ketersediaan Ruangan{% endblock %}
+{% block content %}
+<style>
+    .schedule-table {
+        table-layout: fixed;
+        width: 100%;
+        border-collapse: collapse; /* Menghilangkan spasi antar border */
+    }
+    .schedule-table th, .schedule-table td {
+        text-align: center;
+        vertical-align: middle;
+        font-size: 0.75rem; /* Ukuran font lebih kecil */
+        height: 50px;       /* Tinggi baris lebih pendek */
+        padding: 4px;       /* Padding lebih kecil */
+        border: 1px solid #dee2e6; /* Border untuk setiap sel */
+        word-break: break-word;
+    }
+    .room-header {
+        background-color: #343a40;
+        color: white;
+        padding: 0.75rem; /* Padding header lebih kecil */
+        margin-top: 1.5rem;
+        border-radius: 0.375rem;
+        font-size: 1.25rem; /* Ukuran font header lebih kecil */
+    }
+    .status-cell {
+        color: white;
+        font-weight: bold;
+        transition: transform 0.2s;
+        cursor: pointer;
+    }
+    .status-cell:hover {
+        transform: scale(1.05);
+        z-index: 10;
+        position: relative;
+    }
+    .status-tersedia { background-color: #198754; }
+    .status-dipakai { background-color: #dc3545; }
+    .status-maintenance { background-color: #6c757d; }
+    .status-istirahat { background-color: #ffc107; color: #343a40; }
+    .info-text {
+        font-size: 0.65rem; /* Ukuran font info lebih kecil */
+        font-weight: normal;
+        line-height: 1.1;
+        display: block; /* Agar info di baris baru */
+        margin-top: 2px;
+    }
+</style>
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+    <h1 class="h2">Visual Ketersediaan Ruangan</h1>
+</div>
+{% for ruangan in ruangan_list %}
+<h3 class="room-header text-center">{{ ruangan }}</h3>
+<div class="table-responsive">
+    <table class="table table-bordered schedule-table">
+        <thead class="table-light">
+            <tr>
+                <th style="width: 10%;">Waktu</th>
+                {% for day in days %}
+                <th>{{ day }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+            {% for slot in time_slots %}
+            <tr>
+                <td class="fw-bold">{{ slot }}</td>
+                {% for day in days %}
+                    {% set cell = schedule_grid[ruangan][day][slot] %}
+                    <td class="status-cell status-{{ cell.status.lower() }}" title="{{ cell.info }}">
+                        {{ cell.status }}
+                        {% if cell.status == 'Dipakai' %}
+                        <span class="info-text">{{ cell.info.split(' - ')[0] }}</span>
+                        {% endif %}
+                    </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endfor %}
+{% if not ruangan_list %}
+<div class="alert alert-info text-center p-5">
+    <h5>Belum ada ruangan yang terdaftar.</h5>
+    <p>Tampilan visual akan muncul di sini setelah Anda menambahkan jadwal pertama melalui <b>Booking Manual</b> atau <b>Upload Jadwal</b>.</p>
+</div>
+{% endif %}
+{% endblock %}
